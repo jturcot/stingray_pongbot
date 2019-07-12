@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  pongbot-db:
+    image: mongo
+    ports: 
+      - 27017:27017
+  stingray-pongbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: foreman start
+    environment:
+      - SLACK_API_TOKEN=aaaaa
+      - MONGO_URL=mongodb://pongbot-db:27017
+      - RACK_ENV=production
+    depends_on:
+      - pongbot-db
